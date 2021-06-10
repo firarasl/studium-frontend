@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const role = (roles) => {
+const getRole = (roles) => {
 
     let currentRole = "";
     if(roles.includes("ROLE_ADMIN")){
@@ -17,4 +17,4 @@ const role = (roles) => {
     return currentRole;
 }
 
-export default role;
+export default getRole;

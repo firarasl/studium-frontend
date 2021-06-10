@@ -39,7 +39,8 @@ render(){
         <Router history={history}>
 
         <Switch>
-        <Route exact path="/login" component={() => <Login setRole={this.setRole} />} />
+        {/* <Route exact path="/login" component={() => <Login setRole={this.setRole} />} /> */}
+        <Route path="/login" component={Login} />
 
           <Route path="/signup" component={Signup} />
 
