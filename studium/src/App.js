@@ -5,6 +5,7 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import StudentHome from './routes/student/StudentHome';
 import AdminHome from './routes/admin/AdminHome';
 import TeacherHome from './routes/teacher/TeacherHome';
+import AllUsers from './routes/admin/AllUsers';
 
 import Login from './routes/Login';
 import Signup from './routes/Signup';
@@ -18,24 +19,14 @@ class App extends Component {
     this.state = {
      role :""
         }
-
-        this.setRole = this.setRole.bind(this);
-
   }
 
 
- setRole (currentRole) {
-
-    this.setState({
-      role: currentRole
-    })
- };
-
 render(){
-
+  
   return (
-    <>
-    
+
+
         <Router history={history}>
 
         <Switch>
@@ -46,16 +37,15 @@ render(){
 
 <Fragment>
 <Navbar role ={this.state.role}/>
-
-
         <PrivateRoute exact path="/home-student" component={StudentHome} />
+        <PrivateRoute exact path="/allUsers-admin" component={AllUsers} />
+
           <PrivateRoute exact path="/home-admin" component={AdminHome} />
           <PrivateRoute exact path="/home-teacher" component={TeacherHome} />
          </Fragment>
  <Redirect from="*" to="/login" />
         </Switch>
       </Router>
-    </>
   );
 }
 }

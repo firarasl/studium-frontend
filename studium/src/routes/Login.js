@@ -18,18 +18,21 @@ class Login extends React.Component {
           [event.target.name]: event.target.value
         });
       };
-
+componentDidMount(){
+  sessionStorage.removeItem("role");
+}
     login=()=>{
-      // let role = LoginRequest(this.state.username, this.state.password);
-      // console.log(role)
-      console.log(LoginRequest(this.state.username, this.state.password))
+      LoginRequest(this.state.username, this.state.password);
 
-      // this.props.setRole(role);
+      // document.getElementsByTagName('body')[0].style = 'bgColor: '+sessionStorage.getItem("role");
+
       
     }
 
       render () {
     return (
+      <div className="fake-body">
+
       <div className='login-div'>
         <center>
             <h1>
@@ -52,7 +55,7 @@ class Login extends React.Component {
 
 </div>
 
-      </div> 
+      </div> </div>
     );
     }
 

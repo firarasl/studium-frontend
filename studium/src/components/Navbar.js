@@ -6,22 +6,23 @@ import { SidebarData } from './SidebarData';
 import '../index.css';
 import { IconContext } from 'react-icons';
 
-function Navbar({role}) {
+function Navbar() {
   const [sidebar, setSidebar] = useState(false);
-console.log("COLOR ISSSSS")
-console.log(role)
-
+const role = sessionStorage.getItem("role");
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
-        <div className='navbar '>
+
+        <div className={[role,  "navbar"].join(' ')}>
           <Link to='#' className='menu-bars'>
             <FaIcons.FaBars  />
           </Link>
         </div>
-        <nav className='nav-menu active'>
+        <nav className={[role,  "nav-menu active"].join(' ')}>
+
           <ul className='nav-menu-items'>
-            <li className='navbar-toggle'>
+            <li className={[role,  "navbar-toggle"].join(' ')}>
+
               <span className='menu-bars'>
               <FaIcons.FaGraduationCap />  <span >STUDIUM</span>
               </span> 

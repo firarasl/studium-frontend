@@ -19,14 +19,13 @@ function login(username, password) {
                 // get error message from body or default to response status
                history.push("/login");
             }
-console.log(data)
-console.log(getRole(data.roles))
-localStorage.setItem('username', username);
+sessionStorage.setItem('username', data.username);
+sessionStorage.setItem('token', "Bearer " + data.accessToken);
+sessionStorage.setItem('role', getRole(data.roles));
 
 
             history.push("/home-"+ getRole(data.roles));
 
-            return data;
         })
         .catch(error => {
             history.push("/login");
