@@ -2,7 +2,6 @@ import React from 'react';
 
 
 const getRole = (roles) => {
-
     let currentRole = "";
     if(roles.includes("ROLE_ADMIN")){
         currentRole="admin"

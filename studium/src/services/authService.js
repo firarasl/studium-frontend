@@ -22,9 +22,12 @@ function login(username, password) {
 sessionStorage.setItem('username', data.username);
 sessionStorage.setItem('token', "Bearer " + data.accessToken);
 sessionStorage.setItem('role', getRole(data.roles));
+sessionStorage.setItem('id', data.id);
 
+sessionStorage.setItem('firstname', data.firstname);
+sessionStorage.setItem('lastname', data.lastname);
 
-            history.push("/home-"+ getRole(data.roles));
+            history.push("/home");
 
         })
         .catch(error => {
