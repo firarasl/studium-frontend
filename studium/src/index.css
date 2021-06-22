@@ -5,13 +5,13 @@
   align-items: center;
 }
 
-.admin {
+.ROLE_ADMIN {
   background-color: #800000;
 }
-.student {
-  background-color: #00264d;
+.ROLE_STUDENT {
+  background-color: #1a83ff;
 }
-.teacher {
+.ROLE_TEACHER {
   background-color: #006400;
 }
 
@@ -84,17 +84,23 @@ span {
   position: fixed;
   top: 50%;
   left: 50%;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+  border-radius: 10%;
   width: 33em;
   height: 21em;
   margin-top: -9em; /*set to a negative number 1/2 of your height*/
   margin-left: -15em; /*set to a negative number 1/2 of your width*/
   border: 1px solid #ccc;
-  background-color: wheat;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .fake-body {
-  background-color: #00264d;
+  /* background-color: #00264d; */
   position: fixed;
+  background-image: url("/src/images/background-login.jpg");
   top: 0;
   left: 0;
   min-width: 100%;
@@ -114,7 +120,7 @@ body {
   font-family: "Lato", "sans-serif";
 }
 .profile {
-  min-height: 355px;
+  min-height: 300px;
   display: inline-block;
 }
 figcaption.ratings {
@@ -174,4 +180,69 @@ span.tags {
   left: 50%;
   margin-left: -10px;
   z-index: 10;
+}
+
+label {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+}
+.fields {
+  color: #646c70;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  padding: 10px 10px 5px 10px;
+  width: 100%;
+}
+.field-span {
+  margin: 0 !important;
+}
+
+.fields + .field-span {
+  display: block;
+  border-bottom: solid 3px #019fb6;
+  width: 0;
+  -webkit-transition: width 250ms ease-in-out;
+  transition: width 250ms ease-in-out;
+}
+.fields:focus + .field-span {
+  width: 110%; /*  used calc first, but won't work on Edge  */
+  -webkit-transition: width 250ms ease-in-out;
+  transition: width 250ms ease-in-out;
+}
+
+/* Blue */
+.info {
+  border-color: #2196f3;
+  color: dodgerblue;
+}
+
+.info:hover {
+  background: #2196f3;
+  color: white;
+}
+.form-in-center {
+  margin: 0 10%;
+}
+.btn {
+  padding: 1rem 2rem !important;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+/* Blue */
+.black-btn {
+  border-color: black;
+  color: black;
+}
+
+.black-btn:hover {
+  background: black;
+  color: white;
+}
+
+.form-control:active,
+.form-control:focus {
+  box-shadow: none !important;
 }

@@ -9,7 +9,7 @@
 
 .home,
 .allUsers,
-.products,
+.addUser,
 .userProfile {
   /* display: flex;
   height: 90vh;
@@ -20,7 +20,7 @@
   margin-top: -20px;
   margin-left: 250px;
   padding-top: 50px;
-  height: 1000px;
+  height: auto;
   width: auto;
   position: relative;
   background: white;

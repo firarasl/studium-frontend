@@ -5,25 +5,17 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import MyProfile from './routes/MyProfile';
 import AllUsers from './routes/admin/AllUsers';
 import UserPage from './routes/UserPage';
+import AddUser from './routes/AddUser';
+import Example from './routes/Example';
 
 import Login from './routes/Login';
-import Signup from './routes/Signup';
 import {history} from './helpers/history';
 import { PrivateRoute } from './components/PrivateRoute';
 import { Fragment } from 'react';
 
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-     firstname:"", 
-     lastname:"", 
-     username:"", 
-     id:"", 
-     role :"",
-        }
-  }
+
 
 
 render(){
@@ -32,18 +24,16 @@ render(){
 
 
         <Router history={history}>
-
         <Switch>
-        {/* <Route exact path="/login" component={() => <Login setRole={this.setRole} />} /> */}
         <Route path="/login" component={Login} />
 
-
         <Fragment>
-        <Navbar role ={this.state.role}/>
+        <Navbar/>
         <PrivateRoute exact path="/home" component={MyProfile} />
 
         <PrivateRoute exact path="/allUsers-admin" component={AllUsers} />
         <PrivateRoute exact path="/userData" component={UserPage} />
+        <PrivateRoute exact path="/addUser" component={Example} />
 
          </Fragment>
 

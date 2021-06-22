@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from "../../components/Table";
-import getAllUsers from '../../services/admin/allUsersService';
+import {userService} from '../../services/index';
 
 class AllUsers extends React.Component {
 
@@ -13,7 +13,7 @@ class AllUsers extends React.Component {
 
 componentDidMount(){
 
-  getAllUsers().then((data) => {
+  userService.getAllUsers().then((data) => {
     this.setState({
       tableData: data
     });  

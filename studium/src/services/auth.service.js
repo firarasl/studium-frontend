@@ -1,6 +1,11 @@
 import React from 'react';
 import {history} from "../helpers/history";
-import getRole from "../helpers/role";
+import errorPush from '../helpers/errorPush';
+
+
+export const auth = {
+    login
+};
 
 function login(username, password) {
     const requestOptions = {
@@ -17,17 +22,14 @@ function login(username, password) {
             // check for error response
             if (!response.ok) {
                 // get error message from body or default to response status
-               history.push("/login");
+                errorPush(data.message)
+            //    history.push("/login");
             }
-sessionStorage.setItem('username', data.username);
-sessionStorage.setItem('token', "Bearer " + data.accessToken);
-sessionStorage.setItem('role', getRole(data.roles));
-sessionStorage.setItem('id', data.id);
-
-sessionStorage.setItem('firstname', data.firstname);
-sessionStorage.setItem('lastname', data.lastname);
-
-            history.push("/home");
+            else{
+                sessionStorage.setItem('token', "Bearer " + data.accessToken);
+                sessionStorage.setItem('role', data.roles);
+                history.push("/home");
+            }
 
         })
         .catch(error => {
@@ -37,4 +39,3 @@ sessionStorage.setItem('lastname', data.lastname);
 
 }
 
-export default login;

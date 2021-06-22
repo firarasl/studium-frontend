@@ -9,6 +9,7 @@ import { IconContext } from 'react-icons';
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
 const role = sessionStorage.getItem("role");
+
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>

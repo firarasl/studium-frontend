@@ -1,7 +1,7 @@
 import React from 'react';
 import UserProfile from '../components/UserPofile';
 
-import getUserByUsername from "../services/userDataService";
+import {userService} from "../services/index";
 
 let data = "";
 
@@ -32,18 +32,21 @@ class UserPage extends React.Component {
             firstname: data.firstname,
             lastname: data.lastname
   }
-            
           
         });
 
       }
 
       componentDidMount(){
-        getUserByUsername(this.props.location.query).then((data) => {
-            data = data;
-            this.updateStates(data);            
-          })
-      }
+        let receivedData =userService.getUserByUsername(this.props.location.query);
+        if (receivedData){
+          receivedData.then((data) => {
+              data = data;
+              this.updateStates(data);            
+            })
+        }
+        }
+       
 
 
 render(){
