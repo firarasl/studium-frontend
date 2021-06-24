@@ -37,7 +37,6 @@ class MyProfile extends React.Component {
 
 
       handleEditSubmit=()=>{
-        console.log("YOU PRESSED")
           userService.updateMyData(this.state.newUsername, this.state.newFirstname, 
             this.state.newLastname, this.state.newPassword);
       }

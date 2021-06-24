@@ -2,9 +2,10 @@ import React from 'react';
 import { Fragment } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import beautifyRole from '../helpers/beautifyRole';
-
+import { adminService } from '../services/index';
 import {login} from "../services/auth.service";
 
+var sub = "";
 class UserProfile extends React.Component {
     constructor(props) {
         super(props)
@@ -16,13 +17,16 @@ class UserProfile extends React.Component {
                 lastname: ""
         }
       }
-
+      handleDeleteSubmit=()=>{
+        adminService.deleteUser( this.state.id);
+    }
 
       setData(data){
+
         this.setState({
             username: data.username,
             id: data.id,
-            role: beautifyRole(data.role),
+            role: beautifyRole(data.role.name),
             lastname: data.lastname,
             firstname: data.firstname,
           });  
@@ -31,7 +35,7 @@ class UserProfile extends React.Component {
       render () {
 
 
-        if(this.props.data !="" && this.state.username ===""){
+        if( this.props.data && this.state.username ===""){
             this.setData(this.props.data);
         }
 
@@ -69,7 +73,7 @@ class UserProfile extends React.Component {
                 <div className="col-xs-12 col-sm-4 emphasis" style={{float: "right"}}>
                     {/* <h2><strong>43</strong></h2>                    
                     <p><small>Snippets</small></p> */}
-                    <button type="button" className="btn btn-primary"><span className="fa fa-gear"></span> Delete User </button>
+                    <button type="button" onClick = {this.handleDeleteSubmit} className="btn btn-primary"><span className="fa fa-gear"></span> Delete User </button>
 
                     {/* <div className="btn-group dropup btn-block"> */}
                       {/* <button type="button" className="btn btn-primary"><span className="fa fa-gear"></span> Delete User </button> */}

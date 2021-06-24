@@ -4,7 +4,6 @@ import SuccessPopup from '../components/SuccessPopup';
 // import reportWebVitals from './reportWebVitals';
 
 function successPush(msg){
-  console.log("SUCCESS WAS CALLED")
 
     ReactDOM.render(
 

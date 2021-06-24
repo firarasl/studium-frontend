@@ -4,7 +4,6 @@ import ErrorPopup from '../components/ErrorPopup';
 // import reportWebVitals from './reportWebVitals';
 
 function errorPush(msg){
-  console.log("ERROR WAS CALLED")
     ReactDOM.render(
 
         <React.StrictMode>

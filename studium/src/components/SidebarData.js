@@ -18,17 +18,18 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
-    title: 'Add User',
-    path: '/addUser',
-    icon: <FaIcons.FaUserPlus />,
+    title: 'Add',
+    path: '/add',
+    icon: <FaIcons.FaPlusCircle />,
     cName: 'nav-text'
   },
   {
-    title: 'Team',
-    path: '/team',
-    icon: <IoIcons.IoMdPeople />,
+    title: 'All Classes',
+    path: '/allClasses',
+    icon: <FaIcons.FaUsers />,
     cName: 'nav-text'
   },
+
   {
     title: 'Messages',
     path: '/messages',

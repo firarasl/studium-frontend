@@ -5,8 +5,10 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import MyProfile from './routes/MyProfile';
 import AllUsers from './routes/admin/AllUsers';
 import UserPage from './routes/UserPage';
-import AddUser from './routes/AddUser';
+import AddEntity from './routes/AddEntity';
 import Example from './routes/Example';
+import AllClasses from './routes/admin/AllClasses';
+import ClassProfile from './routes/admin/ClassProfile';
 
 import Login from './routes/Login';
 import {history} from './helpers/history';
@@ -27,17 +29,16 @@ render(){
         <Switch>
         <Route path="/login" component={Login} />
 
-        <Fragment>
-        <Navbar/>
         <PrivateRoute exact path="/home" component={MyProfile} />
 
         <PrivateRoute exact path="/allUsers-admin" component={AllUsers} />
         <PrivateRoute exact path="/userData" component={UserPage} />
-        <PrivateRoute exact path="/addUser" component={Example} />
+        <PrivateRoute exact path="/add" component={AddEntity} />
+        <PrivateRoute exact path="/allClasses" component={AllClasses} />
+        <PrivateRoute exact path="/classProfile" component={ClassProfile} />
 
-         </Fragment>
 
-         {/* <Redirect from="*" to="/login" /> */}
+         <Redirect from="*" to="/login" />
 
 
         </Switch>

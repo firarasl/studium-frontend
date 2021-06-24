@@ -7,7 +7,8 @@ export const userService = {
     getUserByUsername,
     getAllUsers,
     getMyProfile,
-    updateMyData
+    updateMyData,
+    addUser
 };
 
 
@@ -20,27 +21,21 @@ function getUserByUsername(username) {
             Accept: "application/json",
             Authorization: sessionStorage.getItem("token")
           },
+          
     };
-    let roleList=[];
-
     let param=""
     if( username) {
 param=username.username;
     } else{
-      history.push("/home");
+      errorPush("username is empty");
+      // history.push("/home");
     return;
     }
     
-        return fetch('http://localhost:8080/api/user-info/'+param, requestOptions)
+        return fetch('http://localhost:8080/api/users/user-info/'+param, requestOptions)
           .then((response) => { 
               return response.json().then((data) => {
 
-                roleList=[];
-                data.roles.map(role =>{
-                  roleList.push(role.name);
-                })
-                
-data.role = roleList;
                   return data;
               }).catch((err) => {
                   console.log(err);
@@ -72,7 +67,41 @@ function getAllUsers() {
 
 }
 
+function addUser(username, password,firstname,lastname, role ) {
 
+  return fetch('http://localhost:8080/api/admin/add-user', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: sessionStorage.getItem("token")
+    },
+    body: JSON.stringify({ username: username,
+      password: password, firstname:firstname, lastname: lastname, role: role })
+  })
+  .then((response) => { 
+    if(response.ok){
+      return response.json().then((data) => {
+        successPush(data.message);
+          return data;
+      }).catch((err) => {
+          console.log(err);
+          history.push("/login");
+      }) 
+    }
+    else{
+      return response.json().then((data) => {
+        errorPush(data.message);
+          return data;
+      }).catch((err) => {
+          console.log(err);
+          history.push("/login");
+      }) 
+    }
+
+  });
+
+}
 
 
 function getMyProfile() {
@@ -87,6 +116,7 @@ function getMyProfile() {
   })
   .then((response) => { 
       return response.json().then((data) => {
+        console.log(data);
           return data;
       }).catch((err) => {
           console.log(err);
@@ -115,7 +145,6 @@ function updateMyData(newUsername, newFirstname, newLastname, newPassword){
   })
   .then((response) => { 
       return response.json().then((data) => {
-        console.log(data);
         if(data.status === 500){
           errorPush(data.message);
         }else if(data.status === 200){

@@ -19,7 +19,6 @@ class ErrorPopup extends React.Component {
       }
 
       handleClick = () =>{
-           console.log(this.state.isOpen);
         this.setState({
             isOpen: false
            });
