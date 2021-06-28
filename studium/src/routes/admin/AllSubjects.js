@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from "../../components/Table";
-import {userService} from '../../services/index';
+import {adminService} from '../../services/index';
 import {
   Link
 } from "react-router-dom";
@@ -10,17 +10,15 @@ let tableComponent = "";
 
 var columns = [
   { title: 'Id', prop: 'id' },
-  { title: 'Username', prop: 'username' },
+  { title: 'Subject name', prop: 'name' },
+  { title: 'Status', prop: 'isArchieved'  },
+  { title: 'Teacher', prop: 'teacherName' },
+  { title: 'View it', prop: 'view' }
 
-  { title: 'Firstname', prop: 'firstname'  },
-  { title: 'Lastname', prop: 'lastname' },
-  { title: 'Status', prop: 'role' },
-  { title: 'Class name', prop: 'clazz' },
-  { title: 'View it', prop: 'view' },
 ];
 var data=[];
 
-class AllUsers extends React.Component {
+class AllSubjects extends React.Component {
 
   constructor(props) {
     super(props)
@@ -31,27 +29,23 @@ class AllUsers extends React.Component {
   }
   getData () {
     data=[];
-    let className="";
- 
+    let teacherName="";
     if(this.state.tableData.length>0){
  this.state.tableData.map(object => {
- if(object.clazz){
-   className=object.clazz.name;
+ if(object.user){
+    teacherName=object.user.username;
    }
    else{
-     className="Not Assigned"
+    teacherName="No teacher"
    }
-   
    let temp =  { 
      
-     id:object.id, 
-     username: object.username, 
- 
-     role: beautifyRole(object.role.name), 
-     firstname: object.firstname,
-     lastname: object.lastname ,
-     clazz: className ,
-    view:<Link  to={{ pathname: '/userData', query:{username : object.username}  }}>Click on me</Link>
+     id: object.id, 
+     name:object.name, 
+     isArchieved: object.archieved,
+     teacherName: teacherName ,
+     view: <Link to={{ pathname: '/subjectData', query:{id : object.id}  }}>Click on me!</Link>
+    
     };
 
  
@@ -65,7 +59,7 @@ class AllUsers extends React.Component {
 
 componentDidMount(){
 
-  userService.getAllUsers().then((data) => {
+    adminService.getAllSubjects().then((data) => {
     this.setState({
       tableData: data
      });
@@ -89,4 +83,4 @@ componentDidMount(){
 }
 }
 
-export default AllUsers;
+export default AllSubjects;

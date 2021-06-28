@@ -19,9 +19,23 @@ class Login extends React.Component {
           [event.target.name]: event.target.value
          });
       };
+      componentDidMount(){
+        sessionStorage.removeItem("role");
+        sessionStorage.removeItem("token");
+
+      }
 
     login=()=>{
       auth.login(this.state.username, this.state.password);
+    }
+
+    isDisabled(){
+      if(this.state.password !== '' && this.state.username !== '' && this.state.password.length>=3 &&
+      this.state.username.length>=3 ) {
+        return false;
+   }else{
+     return true;
+   }
     }
 
       render () {
@@ -51,7 +65,7 @@ class Login extends React.Component {
 
 <br/>
 <div className="col text-center">
-      <button className="btn info" onClick={this.login}>Login</button>
+      <button className="btn info" disabled={this.isDisabled()} onClick={this.login}>Login</button>
  </div>
 
 </div>

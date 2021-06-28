@@ -20,8 +20,9 @@ class ClassProfile extends React.Component {
         super(props)
         this.state = {
           myData: "",
-          newName: null,
-          username: null
+          newName: "",
+          usernameAssign: "",
+          usernameDeassign:""
           }
 
       }
@@ -35,7 +36,7 @@ class ClassProfile extends React.Component {
             })
           }
           else {
-            history.push("/allClazzes");
+            history.push("/allClasses");
           }
 
       }
@@ -46,15 +47,41 @@ class ClassProfile extends React.Component {
          });
       };
 
+      isDisabledClassName(){
+        if(this.state.newName !== ''   && this.state.newName.length>=3 
+        ) {
+          return false;
+     }else{
+       return true;
+     }
+      }
+
+      isDisabledAssign(){
+        if(this.state.usernameAssign !== ''   && this.state.usernameAssign.length>=3 
+        ) {
+          return false;
+     }else{
+       return true;
+     }
+      }
+
+      isDisabledDeassign(){
+        if(this.state.usernameDeassign !== ''   && this.state.usernameDeassign.length>=3 
+        ) {
+          return false;
+     }else{
+       return true;
+     }
+      }
       handleDeleteSubmit=()=>{
         adminService.deleteClazz(this.state.myData.id);
       }
 
       assignStudentToClazz=()=>{
-          adminService.studentToClazz(this.state.myData.id, this.state.username);
+          adminService.studentToClazz(this.state.myData.id, this.state.usernameAssign);
       }
       deassignStudentToClazz=()=>{
-          adminService.studentToClazz(0, this.state.username);
+          adminService.studentToClazz(0, this.state.usernameDeassign);
       }
 
       handleEditSubmit=()=>{
@@ -120,7 +147,7 @@ render(){
 </label>
                         </div>
                         <div className="col-md-4 text-center">
-                        <button onClick = {this.handleEditSubmit} type="button" className="btn btn-danger">Change name</button>
+                        <button onClick = {this.handleEditSubmit} disabled={this.isDisabledClassName()} type="button" className="btn btn-danger">Change name</button>
 
 </div>
                       </div>
@@ -130,12 +157,12 @@ render(){
                       <div className="row">
                         <div className="col-md-8">
                             <label>
-                          <input name="username" onChange={this.onChangeHandler} placeholder="Student name" className="form-control fields" type="text"/>
+                          <input name="usernameAssign" onChange={this.onChangeHandler} placeholder="Student name" className="form-control fields" type="text"/>
                           <span className="field-span"></span>
 </label>
                         </div>
                         <div className="col-md-4 text-center">
-                        <button onClick = {this.assignStudentToClazz} type="button" className="btn btn-danger">Assign</button>
+                        <button onClick = {this.assignStudentToClazz} disabled={this.isDisabledAssign()} type="button" className="btn btn-danger">Assign</button>
 
 </div>
                       </div>
@@ -145,12 +172,12 @@ render(){
                       <div className="row">
                         <div className="col-md-8">
                             <label>
-                          <input name="username" onChange={this.onChangeHandler} placeholder="Student name" className="form-control fields" type="text"/>
+                          <input name="usernameDeassign" onChange={this.onChangeHandler} placeholder="Student name" className="form-control fields" type="text"/>
                           <span className="field-span"></span>
 </label>
                         </div>
                         <div className="col-md-4 text-center">
-                        <button onClick = {this.deassignStudentToClazz} type="button" className="btn btn-danger">Deassign</button>
+                        <button onClick = {this.deassignStudentToClazz} disabled={this.isDisabledDeassign()} type="button" className="btn btn-danger">Deassign</button>
 
 </div>
                       </div>

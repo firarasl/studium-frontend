@@ -6,13 +6,17 @@
 }
 
 .ROLE_ADMIN {
-  background-color: #800000;
+  /* background-color: #800000; */
+  background-image: url("/src/images/adminBlur.jpg");
 }
 .ROLE_STUDENT {
-  background-color: #1a83ff;
+  background-image: url("/src/images/studentBlur.jpg");
+  /* background-color: #1a83ff; */
 }
 .ROLE_TEACHER {
-  background-color: #006400;
+  background-image: url("/src/images/teacherBlur.jpg");
+
+  /* background-color: #006400; */
 }
 
 .menu-bars {
@@ -120,6 +124,7 @@ body {
   font-family: "Lato", "sans-serif";
 }
 .profile {
+  width: 100%;
   min-height: 300px;
   display: inline-block;
 }

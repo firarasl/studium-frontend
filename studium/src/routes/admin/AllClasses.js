@@ -10,7 +10,9 @@ var columns = [
   { title: 'Class Id', prop: 'id' },
   { title: 'Class name', prop: 'name' },
 
-  { title: 'Subject count', prop: 'subjects'  }
+  { title: 'Subject count', prop: 'subjects'  },
+  { title: 'View it', prop: 'view' }
+
 ];
 var data= [];
 class AllUsers extends React.Component {
@@ -40,10 +42,11 @@ this.state.classesData.map(object => {
 
  let temp =  { 
    
-   id: <Link  to={{ pathname: '/classProfile', query:{id : object.id}  }}>{object.id}</Link>, 
-   name: <Link to={{ pathname: '/classProfile', query:{id : object.id} }}>{object.name}</Link>, 
-   subjects: <Link to={{ pathname: '/classProfile', query:{id : object.id} }}>{object.subjects.length}</Link>};
-
+   id: object.id, 
+   name:object.name, 
+   subjects: object.subjects.length,
+   view:  <Link to={{ pathname: '/classProfile', query:{id : object.id} }}>Click on me!</Link>
+  };
  data.push(temp);
 
 })

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import Navbar from './Navbar';
 
 
-export const PrivateRoute = ({ component: Component, ...rest }) => (
+export const PrivateRoute = ({ component: Component,  allowedRoles, ...rest }) => (
   
 
     <Route {...rest} render={props => (
-        sessionStorage.getItem('role') && sessionStorage.getItem('token')
+        sessionStorage.getItem('role') && allowedRoles.includes(sessionStorage.getItem('role'))  && sessionStorage.getItem('token')
             ? <><Navbar/> <Component {...props} /></>
             : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
     )} />

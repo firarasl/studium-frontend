@@ -11,10 +11,10 @@ class MyProfile extends React.Component {
         super(props)
         this.state = {
           myData: "",
-          newUsername: null,
-          newFirstname:null,
-          newLastname:null,
-          newPassword: null
+          newUsername: "",
+          newFirstname:"",
+          newLastname:"",
+          newPassword: ""
           }
 
       }
@@ -40,7 +40,17 @@ class MyProfile extends React.Component {
           userService.updateMyData(this.state.newUsername, this.state.newFirstname, 
             this.state.newLastname, this.state.newPassword);
       }
-
+      isDisabled(){
+        if((this.state.newUsername !== ''   && this.state.newUsername.length>=3 ) ||
+        (this.state.newFirstname !== ''   && this.state.newFirstname.length>=3 ) ||
+        (this.state.newLastname !== ''   && this.state.newLastname.length>=3 ) ||
+        (this.state.newPassword !== ''   && this.state.newPassword.length>=3 ) 
+        ) {
+          return false;
+     }else{
+       return true;
+     }
+      }
 
 render(){
   return (
@@ -54,7 +64,7 @@ render(){
 	<div className="row userprofile">
 		<div className="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
 <div className="">
-    {this.state.myData.role === "ROLE_STUDENT" || this.state.myData.role === "ROLE_TEACHER" ? <div>
+    {sessionStorage.getItem("role") === "ROLE_STUDENT" || sessionStorage.getItem("role") === "ROLE_TEACHER" ? <div>
     <button id ="toggler" className="btn btn-success btn-block"><span className="fa fa-plus-circle"></span> Edit </button>
 
 
@@ -97,7 +107,7 @@ render(){
 <br/>
 
                     <div className="form-row col text-center">
-                        <button onClick = {this.handleEditSubmit} type="button" className="btn btn-danger">Submit</button>
+                        <button disabled= {this.isDisabled()} onClick = {this.handleEditSubmit} type="button" className="btn btn-danger">Submit</button>
                     </div>
                 </form>
     </UncontrolledCollapse> </div> : ""}</div>

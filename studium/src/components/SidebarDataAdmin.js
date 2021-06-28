@@ -3,7 +3,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 
-export const SidebarData = [
+export const SidebarDataAdmin = [
   {
     title: 'My Profile',
     path: '/home',
@@ -29,7 +29,12 @@ export const SidebarData = [
     icon: <FaIcons.FaUsers />,
     cName: 'nav-text'
   },
-
+  {
+    title: 'All Subjects',
+    path: '/allSubjects',
+    icon: <FaIcons.FaBook />,
+    cName: 'nav-text'
+  },
   {
     title: 'Messages',
     path: '/messages',
@@ -37,9 +42,9 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
-    title: 'Support',
-    path: '/support',
-    icon: <IoIcons.IoMdHelpCircle />,
+    title: 'Inbox',
+    path: '/inbox',
+    icon:<> <FaIcons.FaEnvelopeOpenText /> <span className="label label-success" id="counter"></span> </>,
     cName: 'nav-text'
   }
 ];

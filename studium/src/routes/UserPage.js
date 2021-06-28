@@ -13,10 +13,10 @@ class UserPage extends React.Component {
         super(props)
         this.state = {
           myData: "",
-              newUsername: null,
-              newFirstname:null,
-              newLastname:null,
-              newPassword: null
+              newUsername: "",
+              newFirstname:"",
+              newLastname:"",
+              newPassword: ""
         }
       }
       onChangeHandler = (event) => {
@@ -25,12 +25,25 @@ class UserPage extends React.Component {
          });
       };
 
+
+
       handleEditSubmit=()=>{
         adminService.updateUser(this.state.newUsername, this.state.newFirstname, 
           this.state.newLastname, this.state.newPassword, this.state.myData.id);
     }
 
- 
+    isDisabled(){
+      if((this.state.newUsername !== '' && this.state.newUsername.length>=3)  || 
+       (this.state.newFirstname !== '' &&  this.state.newFirstname.length>=3 ) || 
+      (this.state.newLastname !== '' &&  this.state.newLastname.length>=3) ||  
+      (this.state.newPassword !== ''&& this.state.newPassword.length>=3 )
+   
+      ) {
+        return false;
+   }else{
+     return true;
+   }
+    }
 
       componentDidMount(){
 if(this.props.location.query){
@@ -102,7 +115,7 @@ render(){
 <br/>
 
                     <div className="form-row col text-center">
-                        <button onClick = {this.handleEditSubmit} type="button" className="btn btn-danger">Submit</button>
+                        <button onClick = {this.handleEditSubmit} disabled={this.isDisabled()} type="button" className="btn btn-danger">Submit</button>
                     </div>
                 </form>
     </UncontrolledCollapse> </div> : ""}

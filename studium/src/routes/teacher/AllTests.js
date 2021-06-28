@@ -1,26 +1,26 @@
 import React from 'react';
 import Table from "../../components/Table";
-import {userService} from '../../services/index';
+import {teacherService} from '../../services/index';
 import {
   Link
 } from "react-router-dom";
 import beautifyRole from "../../helpers/beautifyRole";
+import dateBeautifier from "../../helpers/dateBeautifier";
 
 let tableComponent = "";
 
 var columns = [
-  { title: 'Id', prop: 'id' },
-  { title: 'Username', prop: 'username' },
+  { title: 'Test Id', prop: 'id' },
+  { title: 'Test name', prop: 'testName' },
 
-  { title: 'Firstname', prop: 'firstname'  },
-  { title: 'Lastname', prop: 'lastname' },
-  { title: 'Status', prop: 'role' },
-  { title: 'Class name', prop: 'clazz' },
-  { title: 'View it', prop: 'view' },
+  { title: 'Subject name', prop: 'subjectName'  },
+  { title: 'Date', prop: 'date' },
+  { title: 'View it', prop: 'view' }
+
 ];
 var data=[];
 
-class AllUsers extends React.Component {
+class AllTests extends React.Component {
 
   constructor(props) {
     super(props)
@@ -35,24 +35,19 @@ class AllUsers extends React.Component {
  
     if(this.state.tableData.length>0){
  this.state.tableData.map(object => {
- if(object.clazz){
-   className=object.clazz.name;
-   }
-   else{
-     className="Not Assigned"
-   }
-   
+
    let temp =  { 
-     
+  
+
      id:object.id, 
-     username: object.username, 
+     testName: object.name, 
  
-     role: beautifyRole(object.role.name), 
-     firstname: object.firstname,
-     lastname: object.lastname ,
-     clazz: className ,
-    view:<Link  to={{ pathname: '/userData', query:{username : object.username}  }}>Click on me</Link>
-    };
+     subjectName: object.subject.name, 
+     date: dateBeautifier(object.date),
+     view: <Link to={{ pathname: '/testDate', query: {id : object.id}}}>Click on me!</Link>
+
+};
+
 
  
  
@@ -65,7 +60,8 @@ class AllUsers extends React.Component {
 
 componentDidMount(){
 
-  userService.getAllUsers().then((data) => {
+    teacherService.getMyTests().then((data) => {
+        console.log(data)
     this.setState({
       tableData: data
      });
@@ -89,4 +85,4 @@ componentDidMount(){
 }
 }
 
-export default AllUsers;
+export default AllTests;

@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { SidebarData } from './SidebarData';
+import { SidebarDataAdmin } from './SidebarDataAdmin';
+import { SidebarDataTeacher } from './SidebarDataTeacher';
+import { SidebarDataStudent } from './SidebarDataStudent';
+import { userService } from '../services/index';
+
 import '../index.css';
 import { IconContext } from 'react-icons';
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
 const role = sessionStorage.getItem("role");
+count();
 
   return (
     <>
@@ -28,7 +33,10 @@ const role = sessionStorage.getItem("role");
               <FaIcons.FaGraduationCap />  <span >STUDIUM</span>
               </span> 
             </li>
-            {SidebarData.map((item, index) => {
+
+            
+
+            {sessionStorage.getItem("role")=== "ROLE_ADMIN" ? SidebarDataAdmin.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
                   <Link to={item.path}>
@@ -37,12 +45,45 @@ const role = sessionStorage.getItem("role");
                   </Link>
                 </li>
               );
-            })}
+            })
+            : (sessionStorage.getItem("role")==="ROLE_STUDENT" ? SidebarDataStudent.map((item, index) => {
+              return (
+                <li key={index} className={item.cName}>
+                  <Link to={item.path}>
+                    {item.icon}
+                    <span>{item.title}</span>
+                  </Link>
+                </li>
+              );
+            }) : SidebarDataTeacher.map((item, index) => {
+              return (
+                <li key={index} className={item.cName}>
+                  <Link to={item.path}>
+                    {item.icon}
+                    <span>{item.title}</span>
+                  </Link>
+                </li>
+              );
+            }))
+          }
+
+
+
+
           </ul>
         </nav>
       </IconContext.Provider>
     </>
   );
+}
+
+function count(){
+  userService.getUnreadMessages().then((data) => {
+if(document.getElementById("counter")){
+  document.getElementById("counter").innerHTML = data;
+
+}
+    })
 }
 
 export default Navbar;

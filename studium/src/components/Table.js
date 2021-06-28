@@ -10,14 +10,15 @@ class Table extends React.Component{
 
 render(){
 return (
+  
 <DataTable
-    keys="username"
+    keys="id"
     columns={this.props.columns}
     initialData={this.props.getData}
     initialPageLength={5}
     
     pointerOnHover={true}
-    initialSortBy={{ prop: 'username', order: 'descending' }}
+    initialSortBy={{ prop: 'id', order: 'descending' }}
   />
   );
 

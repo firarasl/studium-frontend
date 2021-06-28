@@ -58,40 +58,15 @@ class UserProfile extends React.Component {
                         <span className="tags">{this.state.role}</span>
                    </p>
                 </div>             
-            </div>            
-            <div className="col-xs-12 divider text-center">
-                {/* <div className="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong> 20,7K </strong></h2>                    
-                    <p><small>Followers</small></p>
-                    <button className="btn btn-success btn-block"><span className="fa fa-plus-circle"></span> Follow </button>
-                </div>
-                <div className="col-xs-12 col-sm-4 emphasis">
-                    <h2><strong>245</strong></h2>                    
-                    <p><small>Following</small></p>
-                    <button className="btn btn-info btn-block"><span className="fa fa-user"></span> View Profile </button>
-                </div> */}
-                <div className="col-xs-12 col-sm-4 emphasis" style={{float: "right"}}>
-                    {/* <h2><strong>43</strong></h2>                    
-                    <p><small>Snippets</small></p> */}
-                    <button type="button" onClick = {this.handleDeleteSubmit} className="btn btn-primary"><span className="fa fa-gear"></span> Delete User </button>
+            </div> 
+            {sessionStorage.getItem("role") === "ROLE_ADMIN" ?    <div className="col-xs-12 divider text-center">
+        
+        <div className="col center" style={{float: "right"}}>
+            <button type="button" onClick = {this.handleDeleteSubmit} className="btn btn-primary">Delete</button>
 
-                    {/* <div className="btn-group dropup btn-block"> */}
-                      {/* <button type="button" className="btn btn-primary"><span className="fa fa-gear"></span> Delete User </button> */}
-                      {/* <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"> */}
-                        {/* <span className="caret"></span>
-                        <span className="sr-only">Toggle Dropdown</span>
-                      </button> */}
-                      {/* <ul className="dropdown-menu text-left" role="menu">
-                        <li><a href="#"><span className="fa fa-envelope pull-right"></span> Send an email </a></li>
-                        <li><a href="#"><span className="fa fa-list pull-right"></span> Add or remove from a list  </a></li>
-                        <li className="divider"></li>
-                        <li><a href="#"><span className="fa fa-warning pull-right"></span>Report this user for spam</a></li>
-                        <li className="divider"></li>
-                        <li><a href="#" className="btn disabled" role="button"> Unfollow </a></li>
-                      </ul> */}
-                    {/* </div> */}
-                </div>
-            </div>
+        </div>
+    </div> : "" }           
+        
     	 </div>  
 
                

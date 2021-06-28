@@ -8,7 +8,11 @@ export const userService = {
     getAllUsers,
     getMyProfile,
     updateMyData,
-    addUser
+    addUser,
+    sendMessage,
+    getUnreadMessages,
+    getInbox,
+    openMessage
 };
 
 
@@ -44,6 +48,26 @@ param=username.username;
           });
 }
 
+function openMessage(id) {
+
+  return fetch('http://localhost:8080/api/users/open-message?messageId='+id.id, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: sessionStorage.getItem("token")
+    }
+  })
+  .then((response) => { 
+      return response.json().then((data) => {
+          return data;
+      }).catch((err) => {
+          console.log(err);
+          // history.push("/login");
+      }) 
+  });
+
+}
 
 
 function getAllUsers() {
@@ -67,6 +91,26 @@ function getAllUsers() {
 
 }
 
+function getInbox() {
+
+  return fetch('http://localhost:8080/api/users/my-inbox', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: sessionStorage.getItem("token")
+    }
+  })
+  .then((response) => { 
+      return response.json().then((data) => {
+          return data;
+      }).catch((err) => {
+          console.log(err);
+          // history.push("/login");
+      }) 
+  });
+
+}
 function addUser(username, password,firstname,lastname, role ) {
 
   return fetch('http://localhost:8080/api/admin/add-user', {
@@ -104,6 +148,43 @@ function addUser(username, password,firstname,lastname, role ) {
 }
 
 
+function sendMessage(name, text ) {
+
+  return fetch('http://localhost:8080/api/users/send-message', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: sessionStorage.getItem("token")
+    },
+    body: JSON.stringify({ text: text,
+      receiverUsername: name })
+  })
+  .then((response) => { 
+    if(response.ok){
+      return response.json().then((data) => {
+        successPush(data.message);
+          return;
+      }).catch((err) => {
+          console.log(err);
+          // history.push("/login");
+      }) 
+    }
+    else{
+      return response.json().then((data) => {
+        errorPush(data.message);
+          return;
+      }).catch((err) => {
+          console.log(err);
+          history.push("/login");
+      }) 
+    }
+
+  });
+
+}
+
+
 function getMyProfile() {
 
   return fetch('http://localhost:8080/api/users/my-data', {
@@ -117,6 +198,28 @@ function getMyProfile() {
   .then((response) => { 
       return response.json().then((data) => {
         console.log(data);
+          return data;
+      }).catch((err) => {
+          console.log(err);
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("roles");
+          history.push("/login");
+      }) 
+  });
+
+}
+function getUnreadMessages() {
+
+  return fetch('http://localhost:8080/api/users/my-unread-msgs', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: sessionStorage.getItem("token")
+    }
+  })
+  .then((response) => { 
+      return response.json().then((data) => {
           return data;
       }).catch((err) => {
           console.log(err);

@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from "../../components/Table";
-import {userService} from '../../services/index';
+import {teacherService} from '../../services/index';
 import {
   Link
 } from "react-router-dom";
@@ -9,18 +9,20 @@ import beautifyRole from "../../helpers/beautifyRole";
 let tableComponent = "";
 
 var columns = [
-  { title: 'Id', prop: 'id' },
+  { title: 'Student Id', prop: 'id' },
   { title: 'Username', prop: 'username' },
 
   { title: 'Firstname', prop: 'firstname'  },
   { title: 'Lastname', prop: 'lastname' },
   { title: 'Status', prop: 'role' },
   { title: 'Class name', prop: 'clazz' },
-  { title: 'View it', prop: 'view' },
+  { title: 'GPA', prop: 'gpa' },
+  { title: 'View it', prop: 'view' }
+
 ];
 var data=[];
 
-class AllUsers extends React.Component {
+class AllStudents extends React.Component {
 
   constructor(props) {
     super(props)
@@ -35,24 +37,20 @@ class AllUsers extends React.Component {
  
     if(this.state.tableData.length>0){
  this.state.tableData.map(object => {
- if(object.clazz){
-   className=object.clazz.name;
-   }
-   else{
-     className="Not Assigned"
-   }
-   
    let temp =  { 
-     
-     id:object.id, 
+  
+     id: object.id, 
      username: object.username, 
  
-     role: beautifyRole(object.role.name), 
+     role: beautifyRole(object.role), 
      firstname: object.firstname,
      lastname: object.lastname ,
-     clazz: className ,
-    view:<Link  to={{ pathname: '/userData', query:{username : object.username}  }}>Click on me</Link>
+     clazz: object.className ,
+     gpa: object.gpa ,
+     view: <Link to={{ pathname: '/userData', query: {username : object.username} }}>Click on me!</Link>
+    
     };
+
 
  
  
@@ -64,8 +62,9 @@ class AllUsers extends React.Component {
  }
 
 componentDidMount(){
+  console.log("HELLO")
 
-  userService.getAllUsers().then((data) => {
+    teacherService.getAllMyStudents().then((data) => {
     this.setState({
       tableData: data
      });
@@ -89,4 +88,4 @@ componentDidMount(){
 }
 }
 
-export default AllUsers;
+export default AllStudents;
