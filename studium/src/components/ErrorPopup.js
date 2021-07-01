@@ -27,14 +27,14 @@ class ErrorPopup extends React.Component {
 
 
 
-      render () {
+      render () { 
           if(!this.state.isOpen){
               errorpopup="";
           }
           else{
-           errorpopup = <Alert variant="filled" severity="error"
+           errorpopup = <Alert variant="filled" severity="error" style={{fontSize:"15px"}}
           action={
-            <button  onClick = {this.handleClick} color="inherit" size="small">
+            <button  onClick = {this.handleClick} style={{backgroundColor: "red", color: "white",fontSize:"15px", border: "none"}} >
               CLOSE
             </button>
           }

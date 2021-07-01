@@ -32,9 +32,9 @@ class SuccessPopup extends React.Component {
               errorpopup="";
           }
           else{
-           errorpopup = <Alert variant="filled" severity="success"
+           errorpopup = <Alert variant="filled" severity="success" style={{fontSize:"15px"}}
           action={
-            <button  onClick = {this.handleClick} color="inherit" size="small">
+            <button  onClick = {this.handleClick} color="inherit" style={{backgroundColor: "green", color: "white",fontSize:"15px", border: "none"}}>
               CLOSE
             </button>
           }

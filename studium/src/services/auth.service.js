@@ -19,11 +19,8 @@ function login(username, password) {
             const isJson = response.headers.get('content-type')?.includes('application/json');
             const data = isJson && await response.json();
 
-            // check for error response
             if (!response.ok) {
-                // get error message from body or default to response status
                 errorPush(data.message)
-            //    history.push("/login");
             }
             else{
                 sessionStorage.setItem('token', "Bearer " + data.accessToken);

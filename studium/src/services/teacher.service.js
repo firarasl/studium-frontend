@@ -36,30 +36,44 @@ function getTestById(id) {
 }
 
 function addTest(name, date, subjectName) {
-  console.log(date)
+  let testDate="";
+  testDate=date.replace("T", " ");
+  console.log(testDate);
 
-  return fetch('http://localhost:8080/api/teacher/add-test?name='+name+'&date='+date+'&subjectName='+subjectName, {
+  return fetch('http://localhost:8080/api/teacher/add-test', {
     method: "POST",
+    body: JSON.stringify({ name: name,
+      date: testDate, subjectName:subjectName })
+  ,
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
       Authorization: sessionStorage.getItem("token")
     },
   })
-  .then((response) => { 
-    if(response.ok){
-      return response.json().then((data) => {
-          successPush(data.message)
-          return data;
-      }).catch((err) => {
-          console.log(err);
-          history.push("/login");
-      }) }
+  .then(async response => { 
 
-      else{
-          errorPush("something went wrong!")
-      }
-  });
+
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson && await response.json();
+
+    if (!response.ok) {
+        errorPush(data.message)
+    }
+    else{
+      successPush(data.message);
+    }
+
+
+    }) 
+
+  .catch(error => {
+    console.log(error);
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("roles");
+    history.push("/login");
+});
+
 
 }
 

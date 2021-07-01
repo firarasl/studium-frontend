@@ -20,6 +20,7 @@ export const adminService = {
     deleteSubject,
     archievateSubject,
     updateSubject,
+    assignClazz
 };
 
 
@@ -37,41 +38,35 @@ function updateUser(newUsername, newFirstname, newLastname, newPassword, userId)
         Authorization: sessionStorage.getItem("token")
       }
     })
-    .then((response) => { 
+    .then(async response => { 
 
-      if(response.ok){
-        return response.json().then((data) => {
-          successPush(data.message);
-          // history.push("/allUsers-admin");
-          return;
-      }).catch((err) => {
-          console.log(err);
-          sessionStorage.removeItem("token");
-          sessionStorage.removeItem("roles");
-          history.push("/login");
-      }) 
 
+      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const data = isJson && await response.json();
+
+      if (!response.ok) {
+          errorPush(data.message)
       }
       else{
-        return response.json().then((data) => {
-          errorPush(data.message);
-          history.push("/home");
-          return;
-      }).catch((err) => {
-          console.log(err);
-          sessionStorage.removeItem("token");
-          sessionStorage.removeItem("roles");
-          history.push("/login");
-      }) 
+        successPush(data.message);
       }
-      
 
-    });
+
+
+
+      }) 
+
+
+    .catch(error => {
+      console.log(error);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("roles");
+      history.push("/login");
+});
   }
+
+
   function updateSubject(id, name, teacherName){
-console.log(id)
-console.log(name)
-console.log(teacherName)
 
     return fetch('http://localhost:8080/api/admin/update-subject', {
       method: "PUT",
@@ -84,36 +79,32 @@ console.log(teacherName)
         Authorization: sessionStorage.getItem("token")
       }
     })
-    .then((response) => { 
+    .then(async response => { 
 
-      if(response.ok){
-        return response.json().then((data) => {
-          successPush(data.message);
-          // history.push("/allUsers-admin");
-          return;
-      }).catch((err) => {
-          console.log(err);
-          sessionStorage.removeItem("token");
-          sessionStorage.removeItem("roles");
-          history.push("/login");
-      }) 
+      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const data = isJson && await response.json();
 
+      if (!response.ok) {
+          errorPush(data.message)
       }
       else{
-        return response.json().then((data) => {
-          errorPush(data.message);
-          history.push("/home");
-          return;
-      }).catch((err) => {
-          console.log(err);
-          sessionStorage.removeItem("token");
-          sessionStorage.removeItem("roles");
-          history.push("/login");
-      }) 
+        successPush(data.message);
       }
-      
 
-    });
+
+
+
+      }) 
+
+
+    .catch(error => {
+      console.log(error);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("roles");
+      history.push("/login");
+});
+
+
   }
 
   function deleteSubject(id ) {
@@ -231,7 +222,6 @@ console.log(teacherName)
   
   }
   function getSubjectById(id) {
-    console.log(id)
 
     return fetch('http://localhost:8080/api/admin/subject/'+id.id, {
       method: "GET",
@@ -244,7 +234,6 @@ console.log(teacherName)
     .then((response) => { 
         return response.json().then((data) => {
           
-          console.log(data)
             return data;
         }).catch((err) => {
             console.log(err);
@@ -263,20 +252,27 @@ console.log(teacherName)
         Authorization: sessionStorage.getItem("token")
       },
     })
-    .then((response) => { 
-      if(response.ok){
-        return response.json().then((data) => {
-            successPush(data.message)
-            return data;
-        }).catch((err) => {
-            console.log(err);
-            history.push("/login");
-        }) }
+    .then( async response => { 
 
-        else{
-            errorPush("something went wrong!")
-        }
-    });
+      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const data = isJson && await response.json();
+
+      if (!response.ok) {
+          errorPush(data.message)
+      }
+      else{
+        successPush(data.message);
+      }
+
+
+      }) 
+
+    .catch(error => {
+      console.log(error);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("roles");
+      history.push("/login");
+});
   
   }
 
@@ -292,20 +288,31 @@ console.log(teacherName)
         Authorization: sessionStorage.getItem("token")
       },
     })
-    .then((response) => { 
-      if(response.ok){
-        return response.json().then((data) => {
-            successPush(data.message)
-            return data;
-        }).catch((err) => {
-            console.log(err);
-            history.push("/login");
-        }) }
+    .then( async response => { 
 
-        else{
-            errorPush("something went wrong!")
-        }
-    });
+
+      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const data = isJson && await response.json();
+
+      if (!response.ok) {
+          errorPush(data.message)
+      }
+      else{
+        successPush(data.message);
+      }
+
+
+      }) 
+
+    .catch(error => {
+      console.log(error);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("roles");
+      history.push("/login");
+});
+
+
+
   
   }
 
@@ -319,20 +326,31 @@ console.log(teacherName)
         Authorization: sessionStorage.getItem("token")
       },
     })
-    .then((response) => { 
-      if(response.ok){
-        return response.json().then((data) => {
-            successPush(data.message)
-            return data;
-        }).catch((err) => {
-            console.log(err);
-            history.push("/login");
-        }) }
+    .then(async response => { 
 
-        else{
-            errorPush("something went wrong!")
-        }
-    });
+
+      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const data = isJson && await response.json();
+
+      if (!response.ok) {
+          errorPush(data.message)
+      }
+      else{
+        successPush(data.message);
+      }
+
+
+      }) 
+
+    .catch(error => {
+      console.log(error);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("roles");
+      history.push("/login");
+});
+
+
+
   
   }
 
@@ -376,20 +394,29 @@ console.log(teacherName)
         Authorization: sessionStorage.getItem("token")
       },
     })
-    .then((response) => { 
-      if(response.ok){
-        return response.json().then((data) => {
-            successPush(data.message)
-            return data;
-        }).catch((err) => {
-            console.log(err);
-            history.push("/login");
-        }) }
+    .then( async response => { 
+      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const data = isJson && await response.json();
 
-        else{
-            errorPush("something went wrong!")
-        }
-    });
+      if (!response.ok) {
+          errorPush(data.message)
+      }
+      else{
+        successPush(data.message)
+      }
+
+  })
+  .catch(error => {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('role');
+      history.push("/login");
+      console.error('There was an error!', error);
+  });
+
+
+
+
+
   
   }
 
@@ -403,20 +430,27 @@ console.log(teacherName)
         Authorization: sessionStorage.getItem("token")
       },
     })
-    .then((response) => { 
-      if(response.ok){
-        return response.json().then((data) => {
-            successPush(data.message)
-            return data;
-        }).catch((err) => {
-            console.log(err);
-            history.push("/login");
-        }) }
+    .then(async response => { 
+      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const data = isJson && await response.json();
 
-        else{
-            errorPush("something went wrong!")
-        }
-    });
+      if (!response.ok) {
+          errorPush(data.message)
+      }
+      else{
+        successPush(data.message)
+      }
+
+  })
+  .catch(error => {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('role');
+      history.push("/login");
+      console.error('There was an error!', error);
+  });
+
+
+
   
   }
 
@@ -441,4 +475,34 @@ function getAllSubjects() {
       }) 
   });
 
+}
+
+
+function assignClazz(id, clazz){
+  return fetch('http://localhost:8080/api/admin/subject-assign-clazz?id='+id+'&clazzName='+clazz, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: sessionStorage.getItem("token")
+    },
+  })
+  .then(async response => { 
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson && await response.json();
+
+    if (!response.ok) {
+        errorPush(data.message)
+    }
+    else{
+      successPush(data.message)
+    }
+
+})
+.catch(error => {
+  sessionStorage.removeItem('token');
+  sessionStorage.removeItem('role');
+    history.push("/login");
+    console.error('There was an error!', error);
+});
 }

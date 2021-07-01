@@ -16,8 +16,7 @@ var columns = [
   { title: 'Lastname', prop: 'lastname' },
   { title: 'Status', prop: 'role' },
   { title: 'Class name', prop: 'clazz' },
-  { title: 'GPA', prop: 'gpa' },
-  { title: 'View it', prop: 'view' }
+  { title: 'GPA', prop: 'gpa' }
 
 ];
 var data=[];
@@ -46,9 +45,7 @@ class AllStudents extends React.Component {
      firstname: object.firstname,
      lastname: object.lastname ,
      clazz: object.className ,
-     gpa: object.gpa ,
-     view: <Link to={{ pathname: '/userData', query: {username : object.username} }}>Click on me!</Link>
-    
+     gpa: object.gpa     
     };
 
 

@@ -15,6 +15,7 @@ class AddTest extends React.Component {
       }
 
       addTest=()=>{
+
         teacherService.addTest(this.state.testName, this.state.testDate, this.state.subjectName
           );
       }
@@ -63,7 +64,11 @@ class AddTest extends React.Component {
                       </div>
                       <div className="form-group col-md-4">
                           <label>
-                        <input type="text"  name="testDate"  onChange={this.onChangeHandler}  className="form-control fields" placeholder="Date (yyyy-MM-dd hh:mm)"/>
+                            <input type="datetime-local" onChange={this.onChangeHandler} className="form-control fields"
+       name="testDate" placeholder="Date (yyyy-MM-dd hh:mm)" 
+       min="2020-06-07T00:00" max="2050-06-14T00:00"/>
+
+                        {/* <input type="text"  name="testDate"  onChange={this.onChangeHandler}  className="form-control fields" placeholder="Date (yyyy-MM-dd hh:mm)"/> */}
                         <span className="field-span"></span>
 </label>
                       </div>

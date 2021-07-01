@@ -48,7 +48,7 @@ class AddEntity extends React.Component {
       }
       isDisabledSubjectAdd(){
         if(this.state.subjectName !== '' && this.state.newTeacher !== '' &&
-        this.state.className.length>=3 &&
+        this.state.subjectName.length>=3 &&
         this.state.newTeacher.length>=3
         ) {
           return false;

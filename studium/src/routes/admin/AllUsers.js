@@ -72,6 +72,8 @@ componentDidMount(){
   })
 }
 
+
+
   render(){
       if(this.state.tableData && tableComponent===""){
 

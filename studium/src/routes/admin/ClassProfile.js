@@ -14,6 +14,7 @@ var columns = [
     { title: 'Status', prop: 'role' }
   ];
 
+  let subjects= "";
 class ClassProfile extends React.Component {
 
     constructor(props) {
@@ -22,7 +23,9 @@ class ClassProfile extends React.Component {
           myData: "",
           newName: "",
           usernameAssign: "",
-          usernameDeassign:""
+          usernameDeassign:"",
+          subjectList:"",
+          subjects:""
           }
 
       }
@@ -31,13 +34,31 @@ class ClassProfile extends React.Component {
         if(this.props.location.query){
             adminService.getClazzById(this.props.location.query).then((data) => {
               this.setState({
-                myData: data
+                myData: data,
+                subjectList:data.subjectList
               }); 
+              subjects="";
+
+              for(var i=0; i<this.state.subjectList.length; i++){
+
+                if(i<this.state.subjectList.length-1){
+                  console.log(this.state.subjectList[i].name)
+                subjects +=this.state.subjectList[i].name+ ", ";}
+                else{
+                  console.log(this.state.subjectList[i].name)
+                  subjects +=this.state.subjectList[i].name+ ". ";
+                }
+              }
+              this.setState({
+                subjects:subjects
+              }); 
+
             })
           }
           else {
             history.push("/allClasses");
           }
+
 
       }
 
@@ -106,6 +127,8 @@ render(){
                    <p><strong>Class Name: </strong> {this.state.myData.name}</p>
 
                     <p><strong>Id: </strong> {this.state.myData.id}</p>
+                    <p><strong>Subjects: </strong> {this.state.subjects}</p>
+
                 </div>             
             </div>            
             <div className="col-xs-12 divider text-center">

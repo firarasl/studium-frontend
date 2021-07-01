@@ -30,6 +30,7 @@ class AllSubjects extends React.Component {
   getData () {
     data=[];
     let teacherName="";
+    let status="";
     if(this.state.tableData.length>0){
  this.state.tableData.map(object => {
  if(object.user){
@@ -38,11 +39,17 @@ class AllSubjects extends React.Component {
    else{
     teacherName="No teacher"
    }
+if(object.archieved==true){
+  status="Archieved";
+}else{
+  status="Not Archieved";
+}
+
    let temp =  { 
      
      id: object.id, 
      name:object.name, 
-     isArchieved: object.archieved,
+     isArchieved: status,
      teacherName: teacherName ,
      view: <Link to={{ pathname: '/subjectData', query:{id : object.id}  }}>Click on me!</Link>
     

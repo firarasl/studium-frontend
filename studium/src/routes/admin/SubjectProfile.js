@@ -5,7 +5,8 @@ import { UncontrolledCollapse } from 'reactstrap';
 import * as FaIcons from 'react-icons/fa';
 import {history} from "../../helpers/history";
 
-
+let status="";
+let currentTeacher="";
 
 class SubjectProfile extends React.Component {
 
@@ -13,8 +14,10 @@ class SubjectProfile extends React.Component {
         super(props)
         this.state = {
           myData: "",
+          status:"",
           newName: "",
-          teacherName: ""
+          teacherName: "",
+          clazz:""
           }
 
       }
@@ -22,7 +25,20 @@ class SubjectProfile extends React.Component {
       componentDidMount(){
         if(this.props.location.query){
             adminService.getSubjectById(this.props.location.query).then((data) => {
+console.log(data)
 
+if(data.archieved==false){
+  status="Not Archieved";
+}
+else{
+  status="Archieved";
+}
+if(data.user){
+  currentTeacher=data.user.username;
+}
+else{
+  currentTeacher="No teachers";
+}
               this.setState({
                 myData: data
               }); 
@@ -33,7 +49,14 @@ class SubjectProfile extends React.Component {
           }
 
       }
-
+      isDisabledClazz(){
+        if(this.state.clazz !== ''   && this.state.clazz.length>=3  
+        ) {
+          return false;
+     }else{
+       return true;
+     }
+      }
       isDisabled(){
         if((this.state.newName !== ''   && this.state.newName.length>=3  ) || 
         (this.state.teacherName !== ''   && this.state.teacherName.length>=3 )
@@ -43,7 +66,9 @@ class SubjectProfile extends React.Component {
        return true;
      }
       }
-
+assignClazz=()=>{
+  adminService.assignClazz(this.state.myData.id, this.state.clazz);
+}
       onChangeHandler = (event) => {
         this.setState({
           [event.target.name]: event.target.value
@@ -66,6 +91,7 @@ class SubjectProfile extends React.Component {
 render(){
   return (
     <div className='home'>
+<div id="msg"></div>
     
     <div className="container ">
 	<div className="row userprofile">
@@ -81,13 +107,14 @@ render(){
 
                     <p><strong>Id: </strong> {this.state.myData.id}</p>
                     {/* <p><strong>Teacher: </strong> {this.state.myData.user.username}</p> */}
-                    <p><strong>Status: </strong> {this.state.myData.archieved}</p>
+                    <p><strong>Status: </strong> {status}</p>
+                    <p><strong>Teacher: </strong> {currentTeacher}</p>
 
                 </div>             
             </div>            
             <div className="col-xs-12 divider text-center">
                  <div className="col-xs-12 col-sm-4 emphasis">
-                    <button onClick = {this.archieveSubject}  className="btn btn-success btn-block">Archivate </button>
+                    <button onClick = {this.archieveSubject} disabled={status==="Archieved"} className="btn btn-success btn-block">Archivate </button>
                 </div> 
                 <div className="col-xs-12 col-sm-4 emphasis" style={{float: "right"}}>
                     <button type="button" onClick = {this.handleDeleteSubmit} className="btn btn-primary">Delete Subject </button>
@@ -126,7 +153,7 @@ render(){
                           <span className="field-span"></span>
 </label>
                         </div>
-                        <div className="col-md-8">
+                        <div className="col-md-4">
                             <label>
                           <input name="teacherName" onChange={this.onChangeHandler} placeholder="Teacher username" className="form-control fields" type="text"/>
                           <span className="field-span"></span>
@@ -134,15 +161,29 @@ render(){
                         </div>
 
 
-                        <div className="col-md-4 text-center">
+                        <div className="col-md-4">
                         <button onClick = {this.handleEditSubmit}  disabled={this.isDisabled()}   type="button" className="btn btn-danger">Update subject</button>
 
 </div>
                       </div>
 
+
                       <br/>
 
+                      <div className="row">
+                        <div className="col-md-8">
+                            <label>
+                          <input name="clazz" onChange={this.onChangeHandler} placeholder="Assign to a Class" className="form-control fields" type="text"/>
+                          <span className="field-span"></span>
+</label>
+                        </div>
+                        <div className="col-md-4">
+                            <button onClick = {this.assignClazz}  disabled={this.isDisabledClazz()}   type="button" className="btn btn-danger">Submit</button>
+                        </div>
 
+
+
+                      </div>
                     <br/>
 
 <br/>
@@ -152,7 +193,6 @@ render(){
 </div></div>
 </div>
 
-<div id="msg"></div>
 
     </div>
   );
