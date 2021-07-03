@@ -6,7 +6,6 @@ import * as FaIcons from 'react-icons/fa';
 import {history} from "../../helpers/history";
 
 let status="";
-let currentTeacher="";
 
 class SubjectProfile extends React.Component {
 
@@ -17,7 +16,6 @@ class SubjectProfile extends React.Component {
           status:"",
           newName: "",
           teacherName: "",
-          clazz:""
           }
 
       }
@@ -33,12 +31,7 @@ if(data.archieved==false){
 else{
   status="Archieved";
 }
-if(data.user){
-  currentTeacher=data.user.username;
-}
-else{
-  currentTeacher="No teachers";
-}
+
               this.setState({
                 myData: data
               }); 
@@ -49,14 +42,7 @@ else{
           }
 
       }
-      isDisabledClazz(){
-        if(this.state.clazz !== ''   && this.state.clazz.length>=3  
-        ) {
-          return false;
-     }else{
-       return true;
-     }
-      }
+
       isDisabled(){
         if((this.state.newName !== ''   && this.state.newName.length>=3  ) || 
         (this.state.teacherName !== ''   && this.state.teacherName.length>=3 )
@@ -66,9 +52,7 @@ else{
        return true;
      }
       }
-assignClazz=()=>{
-  adminService.assignClazz(this.state.myData.id, this.state.clazz);
-}
+
       onChangeHandler = (event) => {
         this.setState({
           [event.target.name]: event.target.value
@@ -108,7 +92,9 @@ render(){
                     <p><strong>Id: </strong> {this.state.myData.id}</p>
                     {/* <p><strong>Teacher: </strong> {this.state.myData.user.username}</p> */}
                     <p><strong>Status: </strong> {status}</p>
-                    <p><strong>Teacher: </strong> {currentTeacher}</p>
+                    <p><strong>Teacher: </strong> {this.state.myData.teacherName}</p>
+                    <p><strong>Class: </strong> {this.state.myData.clazzName}</p>
+
 
                 </div>             
             </div>            
@@ -169,22 +155,6 @@ render(){
 
 
                       <br/>
-
-                      <div className="row">
-                        <div className="col-md-8">
-                            <label>
-                          <input name="clazz" onChange={this.onChangeHandler} placeholder="Assign to a Class" className="form-control fields" type="text"/>
-                          <span className="field-span"></span>
-</label>
-                        </div>
-                        <div className="col-md-4">
-                            <button onClick = {this.assignClazz}  disabled={this.isDisabledClazz()}   type="button" className="btn btn-danger">Submit</button>
-                        </div>
-
-
-
-                      </div>
-                    <br/>
 
 <br/>
 

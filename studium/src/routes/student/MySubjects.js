@@ -14,6 +14,8 @@ var columns = [
   { title: 'Status', prop: 'isArchieved' },
   { title: 'Average Grade', prop: 'gpa'  },
   { title: 'Class name', prop: 'clazzName'  },
+  { title: 'Teacher', prop: 'teacher'  },
+
   { title: 'View it', prop: 'view' }
 
 
@@ -57,6 +59,7 @@ else
      clazzName:className, 
 
      gpa: key,
+     teacher: dataHelper[key].user.username,
     view: <Link to={{ pathname: '/myTestGrade', query:{id : dataHelper[key].id}}}>Click on me!</Link>
     };
 
@@ -73,7 +76,6 @@ else
 
     studentService.getMySubjects().then((data) => {
 dataHelper=data.subjects;
-console.log(dataHelper)
 
     this.setState({
       tableData: data

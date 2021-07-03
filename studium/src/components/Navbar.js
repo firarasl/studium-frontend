@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { SidebarDataAdmin } from './SidebarDataAdmin';
-import { SidebarDataTeacher } from './SidebarDataTeacher';
-import { SidebarDataStudent } from './SidebarDataStudent';
+import { SidebarDataAdmin } from './data/SidebarDataAdmin';
+import { SidebarDataTeacher } from './data/SidebarDataTeacher';
+import { SidebarDataStudent } from './data/SidebarDataStudent';
 import { userService } from '../services/index';
 
 import '../index.css';

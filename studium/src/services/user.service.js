@@ -5,10 +5,8 @@ import successPush from '../helpers/successpopup';
 
 export const userService = {
     getUserByUsername,
-    getAllUsers,
     getMyProfile,
     updateMyData,
-    addUser,
     sendMessage,
     getUnreadMessages,
     getInbox,
@@ -70,27 +68,6 @@ function openMessage(id) {
 }
 
 
-function getAllUsers() {
-
-    return fetch('http://localhost:8080/api/admin/all-users', {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: sessionStorage.getItem("token")
-      }
-    })
-    .then((response) => { 
-        return response.json().then((data) => {
-            return data;
-        }).catch((err) => {
-            console.log(err);
-            // history.push("/login");
-        }) 
-    });
-
-}
-
 function getInbox() {
 
   return fetch('http://localhost:8080/api/users/my-inbox', {
@@ -111,41 +88,6 @@ function getInbox() {
   });
 
 }
-function addUser(username, password,firstname,lastname, role ) {
-
-  return fetch('http://localhost:8080/api/admin/add-user', {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: sessionStorage.getItem("token")
-    },
-    body: JSON.stringify({ username: username,
-      password: password, firstname:firstname, lastname: lastname, role: role })
-  })
-  .then((response) => { 
-    if(response.ok){
-      return response.json().then((data) => {
-        successPush(data.message);
-          return data;
-      }).catch((err) => {
-          console.log(err);
-          history.push("/login");
-      }) 
-    }
-    else{
-      return response.json().then((data) => {
-        errorPush(data.message);
-          return data;
-      }).catch((err) => {
-          console.log(err);
-          history.push("/login");
-      }) 
-    }
-
-  });
-
-}
 
 
 function sendMessage(name, text ) {
@@ -160,27 +102,27 @@ function sendMessage(name, text ) {
     body: JSON.stringify({ text: text,
       receiverUsername: name })
   })
-  .then((response) => { 
-    if(response.ok){
-      return response.json().then((data) => {
-        successPush(data.message);
-          return;
-      }).catch((err) => {
-          console.log(err);
-          // history.push("/login");
-      }) 
+  .then(async response => { 
+
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson && await response.json();
+
+    if (!response.ok) {
+        errorPush(data.message)
     }
     else{
-      return response.json().then((data) => {
-        errorPush(data.message);
-          return;
-      }).catch((err) => {
-          console.log(err);
-          history.push("/login");
-      }) 
+      successPush(data.message)
     }
 
-  });
+})
+.catch(error => {
+  sessionStorage.removeItem('token');
+  sessionStorage.removeItem('role');
+    history.push("/login");
+    console.error('There was an error!', error);
+});
+
+
 
 }
 
@@ -197,7 +139,6 @@ function getMyProfile() {
   })
   .then((response) => { 
       return response.json().then((data) => {
-        console.log(data);
           return data;
       }).catch((err) => {
           console.log(err);
@@ -246,20 +187,28 @@ function updateMyData(newUsername, newFirstname, newLastname, newPassword){
       Authorization: sessionStorage.getItem("token")
     }
   })
-  .then((response) => { 
-      return response.json().then((data) => {
-        if(data.status === 500){
-          errorPush(data.message);
-        }else if(data.status === 200){
-          successPush("You changed your data!");
-          history.push("/home");
-          return;
-        }
-      }).catch((err) => {
-          console.log(err);
-          sessionStorage.removeItem("token");
-          sessionStorage.removeItem("roles");
-          history.push("/login");
-      }) 
-  });
+  .then(async response => { 
+
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson && await response.json();
+
+    if (!response.ok) {
+      history.push("/login");
+
+    }
+    else{
+      successPush(data.message)
+    }
+
+})
+.catch(error => {
+  sessionStorage.removeItem('token');
+  sessionStorage.removeItem('role');
+    history.push("/login");
+    console.error('There was an error!', error);
+});
+
+
+
+
 }

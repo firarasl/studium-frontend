@@ -9,8 +9,129 @@ export const teacherService = {
     addTest,
     getMyTests,
     getTestById,
-    upload
+    upload,
+    deleteTest,
+    updateTest,
+    gradeStudent
 };
+
+function deleteTest(id) {
+
+  return fetch('http://localhost:8080/api/teacher/delete-test?testId='+id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: sessionStorage.getItem("token")
+    },
+  })
+  .then(async response => { 
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson && await response.json();
+
+    if (!response.ok) {
+        errorPush(data.message)
+    }
+    else{
+      successPush(data.message);
+    }
+
+
+    }) 
+
+  .catch(error => {
+    console.log(error);
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("roles");
+    history.push("/login");
+});
+
+}
+
+function updateTest(id, name, date) {
+let newDate="";
+console.log(date)
+  if(date!==""){
+    newDate=date.replace("T", " ");
+  }
+  console.log(newDate)
+
+  return fetch('http://localhost:8080/api/teacher/update-test?name='+name +'&id='+id +'&date='+newDate, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: sessionStorage.getItem("token")
+    },
+  })
+  .then( async response => { 
+
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson && await response.json();
+
+    if (!response.ok) {
+        errorPush(data.message)
+    }
+    else{
+      successPush(data.message);
+    }
+
+
+    }) 
+
+  .catch(error => {
+    console.log(error);
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("roles");
+    history.push("/login");
+});
+
+}
+
+
+function gradeStudent(grade, username, id) {
+
+
+  return fetch('http://localhost:8080/api/teacher/change-test-grade', {
+    method: "PUT",
+    body: JSON.stringify({ testId: id,
+      studentName: username, grade:grade })
+  ,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: sessionStorage.getItem("token")
+    },
+  })
+  .then(async response => { 
+
+
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson && await response.json();
+    console.log(response)
+
+    if (!response.ok) {
+        errorPush(data.message)
+    }
+    else{
+      successPush(data.message);
+    }
+
+
+    }) 
+
+  .catch(error => {
+    console.log(error);
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("roles");
+    history.push("/login");
+});
+
+
+
+
+}
+
 
 
 function getTestById(id) {
@@ -35,7 +156,7 @@ function getTestById(id) {
 
 }
 
-function addTest(name, date, subjectName) {
+function addTest(name, date, subjectName, clazzName) {
   let testDate="";
   testDate=date.replace("T", " ");
   console.log(testDate);
@@ -43,7 +164,7 @@ function addTest(name, date, subjectName) {
   return fetch('http://localhost:8080/api/teacher/add-test', {
     method: "POST",
     body: JSON.stringify({ name: name,
-      date: testDate, subjectName:subjectName })
+      date: testDate, subjectName:subjectName, clazzName:clazzName })
   ,
     headers: {
       "Content-Type": "application/json",
@@ -164,19 +285,32 @@ function upload(file) {
       Authorization: sessionStorage.getItem("token")
     },
   })
-  .then((response) => { 
-    if(response.ok){
-      return response.json().then((data) => {
-          successPush(data.message)
-          return data;
-      }).catch((err) => {
-          console.log(err);
-          history.push("/login");
-      }) }
+  .then(async response => { 
 
-      else{
-          errorPush("something went wrong!")
-      }
-  });
+
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson && await response.json();
+
+
+    console.log(response)
+    if (!response.ok) {
+        errorPush(data.message)
+    }
+    else{
+      successPush(data.message);
+    }
+
+
+    }) 
+
+  .catch(error => {
+    console.log(error);
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("roles");
+    history.push("/login");
+});
+
+
+
 
 }

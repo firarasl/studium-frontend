@@ -116,6 +116,11 @@ class TestProfile extends React.Component {
           teacherService.updateTest(this.state.myData.id, this.state.newName, this.state.newDate);
       }
 
+      gradeStudent=()=>{
+
+        teacherService.gradeStudent(this.state.grade, this.state.username, this.state.myData.id);
+      }
+
 
 render(){
     if(this.state.studentData && tableComponent===""){
@@ -141,6 +146,8 @@ render(){
 
                     <p><strong>Id: </strong> {this.state.myData.id}</p>
                     <p><strong>Subject: </strong> {this.state.myData.subjectName}</p>
+                    <p><strong>Class: </strong> {this.state.myData.clazzName}</p>
+
                     <p><strong>Date: </strong> {dateBeautifier(this.state.myData.date)}</p>
 
                 </div>             
@@ -185,7 +192,10 @@ render(){
                         </div>
                         <div className="col-md-4">
                             <label>
-                          <input name="newDate" onChange={this.onChangeHandler} placeholder="yyyy-MM-dd hh:mm" className="form-control fields" type="text"/>
+                            <input type="datetime-local" onChange={this.onChangeHandler} className="form-control fields"
+       name="newDate" 
+       min="2020-06-07T00:00" max="2050-06-14T00:00"/>
+                          {/* <input name="newDate" onChange={this.onChangeHandler} placeholder="yyyy-MM-dd hh:mm" className="form-control fields" type="text"/> */}
                           <span className="field-span"></span>
 </label>
                         </div>
@@ -212,7 +222,7 @@ render(){
                         </div>
 
                         <div className="col-md-4 text-center">
-                        <button disabled={this.isDisabledGrade()} onClick = {this.assignStudentToClazz} type="button" className="btn btn-danger">Grade</button>
+                        <button disabled={this.isDisabledGrade()} onClick = {this.gradeStudent} type="button" className="btn btn-danger">Grade</button>
 
 </div>
                       </div>

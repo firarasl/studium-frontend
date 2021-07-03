@@ -3,6 +3,7 @@ import UserProfile from '../components/UserPofile';
 import { userService } from '../services/index';
 import { UncontrolledCollapse } from 'reactstrap';
 
+import {history} from "../helpers/history";
 
 
 class MyProfile extends React.Component {
@@ -64,7 +65,7 @@ render(){
 	<div className="row userprofile">
 		<div className="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
 <div className="">
-    {sessionStorage.getItem("role") === "ROLE_STUDENT" || sessionStorage.getItem("role") === "ROLE_TEACHER" ? <div>
+ <div>
     <button id ="toggler" className="btn btn-success btn-block"><span className="fa fa-plus-circle"></span> Edit </button>
 
 
@@ -110,7 +111,7 @@ render(){
                         <button disabled= {this.isDisabled()} onClick = {this.handleEditSubmit} type="button" className="btn btn-danger">Submit</button>
                     </div>
                 </form>
-    </UncontrolledCollapse> </div> : ""}</div>
+    </UncontrolledCollapse> </div> </div>
 </div></div>
 </div>
 

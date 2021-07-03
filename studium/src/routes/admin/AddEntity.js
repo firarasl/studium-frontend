@@ -1,9 +1,9 @@
 import React from 'react';
 import { Fragment } from 'react';
 import * as FaIcons from 'react-icons/fa';
-import { userService } from '../services';
+import { userService } from '../../services';
 import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
-import { adminService } from '../services';
+import { adminService } from '../../services';
 class AddEntity extends React.Component {
     constructor(props) {
         super(props)
@@ -16,7 +16,8 @@ class AddEntity extends React.Component {
 
           className: "",
           subjectName:"",
-          newTeacher: ""
+          newTeacher: "",
+          subjectsClazz:""
           }
       }
 
@@ -47,10 +48,9 @@ class AddEntity extends React.Component {
      }
       }
       isDisabledSubjectAdd(){
-        if(this.state.subjectName !== '' && this.state.newTeacher !== '' &&
-        this.state.subjectName.length>=3 &&
-        this.state.newTeacher.length>=3
-        ) {
+        if(this.state.subjectName !== '' && this.state.newTeacher !== '' && this.state.subjectsClazz !=='' &&
+        this.state.subjectName.length>=3 && this.state.subjectsClazz.length>=3 &&
+        this.state.newTeacher.length>=3  ) {
           return false;
      }else{
        return true;
@@ -66,7 +66,7 @@ class AddEntity extends React.Component {
         adminService.addClass(this.state.className );
       }
       addSubject =()=>{
-        adminService.addSubject(this.state.subjectName, this.state.newTeacher );
+        adminService.addSubject(this.state.subjectName, this.state.newTeacher, this.state.subjectsClazz );
       }
 
       render () {
@@ -206,19 +206,25 @@ class AddEntity extends React.Component {
 
 <form className="form-in-center">
                   <div className="row">
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                           <label>
                         <input name="subjectName"  onChange={this.onChangeHandler}  placeholder="Subject Name" className="form-control fields" type="text"/>
                         <span className="field-span"></span>
 </label>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                           <label>
                         <input name="newTeacher"  onChange={this.onChangeHandler}  placeholder="Teacher username" className="form-control fields" type="text"/>
                         <span className="field-span"></span>
 </label>
                       </div>
-                   <div className="col-md-4">
+                      <div className="col-md-3">
+                          <label>
+                        <input name="subjectsClazz"  onChange={this.onChangeHandler}  placeholder="Class name" className="form-control fields" type="text"/>
+                        <span className="field-span"></span>
+</label>
+                      </div>
+                   <div className="col-md-3">
                    <div className="form-row col text-center">
                       <button onClick={this.addSubject} disabled={this.isDisabledSubjectAdd()} type="button" className="btn btn-danger">Submit</button>
                   </div>

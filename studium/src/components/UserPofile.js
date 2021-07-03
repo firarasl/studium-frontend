@@ -4,6 +4,7 @@ import * as FaIcons from 'react-icons/fa';
 import beautifyRole from '../helpers/beautifyRole';
 import { adminService } from '../services/index';
 import {login} from "../services/auth.service";
+import {history} from "../helpers/history";
 
 var sub = "";
 class UserProfile extends React.Component {
@@ -22,14 +23,19 @@ class UserProfile extends React.Component {
     }
 
       setData(data){
+if(data && data.role){
+    this.setState({
+        username: data.username,
+        id: data.id,
+        role: beautifyRole(data.role.name),
+        lastname: data.lastname,
+        firstname: data.firstname,
+      });  
+}
+else{
+    history.push("/login");
 
-        this.setState({
-            username: data.username,
-            id: data.id,
-            role: beautifyRole(data.role.name),
-            lastname: data.lastname,
-            firstname: data.firstname,
-          });  
+}
       }
 
       render () {

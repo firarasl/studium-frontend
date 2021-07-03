@@ -45,7 +45,6 @@ function getTestsBySubject(id) {
       .then((response) => { 
           return response.json().then((data) => {
             
-            console.log(data)
               return data;
           }).catch((err) => {
               console.log(err);

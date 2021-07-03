@@ -14,13 +14,13 @@ export const adminService = {
     addClass,
     getAllSubjects,
     addSubject,
+    addUser,
 
 
     getSubjectById,
     deleteSubject,
     archievateSubject,
     updateSubject,
-    assignClazz
 };
 
 
@@ -357,7 +357,7 @@ function updateUser(newUsername, newFirstname, newLastname, newPassword, userId)
     
   function deleteClazz(id) {
 
-    return fetch('http://localhost:8080/api/admin/delete-class?clazzId='+id, {
+    return fetch('http://localhost:8080/api/admin/delete-test?clazzId='+id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -365,21 +365,31 @@ function updateUser(newUsername, newFirstname, newLastname, newPassword, userId)
         Authorization: sessionStorage.getItem("token")
       },
     })
-    .then((response) => { 
-      if(response.ok){
-        return response.json().then((data) => {
-            successPush(data.message)
-            return data;
-        }).catch((err) => {
-            console.log(err);
-            history.push("/login");
-        }) }
+    .then(async response => { 
 
-        else{
-            errorPush("something went wrong!")
-        }
-    });
-  
+      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const data = isJson && await response.json();
+
+      if (!response.ok) {
+          errorPush(data.message)
+      }
+      else{
+        successPush(data.message);
+      }
+
+
+      }) 
+
+    .catch(error => {
+      console.log(error);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("roles");
+      history.push("/login");
+});
+
+
+
+
   }
 
 
@@ -420,10 +430,13 @@ function updateUser(newUsername, newFirstname, newLastname, newPassword, userId)
   
   }
 
-  function addSubject(name, teacher) {
+  function addSubject(name, teacher, clazzName) {
 
-    return fetch('http://localhost:8080/api/admin/add-subject?name='+name+'&teacherName='+teacher, {
+    return fetch('http://localhost:8080/api/admin/add-subject', {
       method: "POST",
+      body: JSON.stringify({ name: name, teacherName: teacher,
+        clazzName: clazzName
+       }),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -464,30 +477,33 @@ function getAllSubjects() {
       Accept: "application/json",
       Authorization: sessionStorage.getItem("token")
     }
-  })
-  .then((response) => { 
-      return response.json().then((data) => {
-          return data;
-      }).catch((err) => {
-          console.log(err);
-          errorPush("something went wrong!")
-          // history.push("/login");
-      }) 
-  });
+  }).then((response) => { 
+    return response.json().then((data) => {
+      console.log(data)
+        return data;
+    }).catch((err) => {
+        console.log(err);
+        history.push("/login");
+    }) 
+});
+
+
 
 }
 
+function addUser(username, password,firstname,lastname, role ) {
 
-function assignClazz(id, clazz){
-  return fetch('http://localhost:8080/api/admin/subject-assign-clazz?id='+id+'&clazzName='+clazz, {
-    method: "PUT",
+  return fetch('http://localhost:8080/api/admin/add-user', {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
       Authorization: sessionStorage.getItem("token")
     },
+    body: JSON.stringify({ username: username,
+      password: password, firstname:firstname, lastname: lastname, role: role })
   })
-  .then(async response => { 
+  .then(async response=> { 
     const isJson = response.headers.get('content-type')?.includes('application/json');
     const data = isJson && await response.json();
 
@@ -505,4 +521,41 @@ function assignClazz(id, clazz){
     history.push("/login");
     console.error('There was an error!', error);
 });
+
+
+
+
+
+
+
 }
+
+
+// function assignClazz(id, clazz){
+//   return fetch('http://localhost:8080/api/admin/subject-assign-clazz?id='+id+'&clazzName='+clazz, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Accept: "application/json",
+//       Authorization: sessionStorage.getItem("token")
+//     },
+//   })
+//   .then(async response => { 
+//     const isJson = response.headers.get('content-type')?.includes('application/json');
+//     const data = isJson && await response.json();
+
+//     if (!response.ok) {
+//         errorPush(data.message)
+//     }
+//     else{
+//       successPush(data.message)
+//     }
+
+// })
+// .catch(error => {
+//   sessionStorage.removeItem('token');
+//   sessionStorage.removeItem('role');
+//     history.push("/login");
+//     console.error('There was an error!', error);
+// });
+// }

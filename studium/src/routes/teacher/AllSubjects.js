@@ -9,6 +9,8 @@ let tableComponent = "";
 var columns = [
     { title: 'Id', prop: 'id' },
     { title: 'Subject name', prop: 'name' },
+    { title: 'Class', prop: 'clazz' },
+
     { title: 'Status', prop: 'isArchieved'  }  ];
 var data= [];
 
@@ -49,6 +51,7 @@ else
 
     id: object.id,
     name:object.name,
+    clazz: object.clazzName,
     isArchieved:status};
 
 

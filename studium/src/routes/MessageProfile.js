@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import dateBeautifier from '../helpers/dateBeautifier';
 import { userService } from '../services/index';
+import {history} from "../helpers/history";
 
 class MessageProfile extends React.Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class MessageProfile extends React.Component {
           })
         }
         else{
-        //   history.push("/messages");
+          history.push("/inbox");
         }
         
                 }

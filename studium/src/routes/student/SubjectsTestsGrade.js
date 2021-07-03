@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import beautifyRole from "../../helpers/beautifyRole";
 import dateBeautifier from "../../helpers/dateBeautifier";
+import {history} from "../../helpers/history";
 
 let tableComponent = "";
 
@@ -13,7 +14,6 @@ var columns = [
   { title: 'Test Id', prop: 'id' },
   { title: 'Test name', prop: 'name' },
   { title: 'Test date', prop: 'date' },
-  { title: 'Subject name', prop: 'subject'  },
   { title: 'Grade', prop: 'grade'  }
 
 ];
@@ -40,7 +40,7 @@ class SubjectsTestsGrade extends React.Component {
  this.state.myData.map(object => {
    console.log(object)
 
- if(object.isGraded==false){
+ if(object.graded==false){
 
     isGraded="Not graded yet!";
    }
@@ -54,10 +54,8 @@ class SubjectsTestsGrade extends React.Component {
      name: object.test.name, 
  
      date:dateBeautifier(object.test.date), 
-     subject: object.subjectName,
      grade: isGraded};
 
- console.log(temp)
  
    data.push(temp);
  
@@ -71,13 +69,14 @@ class SubjectsTestsGrade extends React.Component {
 
     if(this.props.location.query){
         studentService.getTestsBySubject(this.props.location.query).then((data) => {
+          console.log(data)
           this.setState({
             myData: data
           }); 
         })
       }
       else {
-        // history.push("/mySubjects");
+        history.push("/mySubjects");
       }
 
 }

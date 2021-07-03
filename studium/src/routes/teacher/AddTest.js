@@ -10,13 +10,14 @@ class AddTest extends React.Component {
             testName: "",
             testDate: "",
             subjectName: "",
+            clazzName:""
 
           }
       }
 
       addTest=()=>{
 
-        teacherService.addTest(this.state.testName, this.state.testDate, this.state.subjectName
+        teacherService.addTest(this.state.testName, this.state.testDate, this.state.subjectName, this.state.clazzName
           );
       }
 
@@ -27,8 +28,8 @@ class AddTest extends React.Component {
       };
 
       isDisabled(){
-        if(this.state.testName !== '' && this.state.testDate !== '' && this.state.subjectName !== '' 
-        && this.state.testName.length>=3 && this.state.testDate.length>=3 && this.state.subjectName.length>=3  ) {
+        if(this.state.testName !== '' && this.state.testDate !== '' && this.state.subjectName !== '' && this.state.clazzName !== '' 
+        && this.state.testName.length>=3 && this.state.testDate.length>=3 && this.state.subjectName.length>=3 && this.state.clazzName.length>=3  ) {
           return false;
      }else{
        return true;
@@ -56,29 +57,34 @@ class AddTest extends React.Component {
 
 <form className="form-in-center">
                   <div className="row">
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                           <label>
                         <input name="testName"  onChange={this.onChangeHandler}  placeholder="Test Name" className="form-control fields" type="text"/>
                         <span className="field-span"></span>
 </label>
                       </div>
-                      <div className="form-group col-md-4">
+                      <div className="form-group col-md-3">
                           <label>
                             <input type="datetime-local" onChange={this.onChangeHandler} className="form-control fields"
-       name="testDate" placeholder="Date (yyyy-MM-dd hh:mm)" 
+       name="testDate" 
        min="2020-06-07T00:00" max="2050-06-14T00:00"/>
 
                         {/* <input type="text"  name="testDate"  onChange={this.onChangeHandler}  className="form-control fields" placeholder="Date (yyyy-MM-dd hh:mm)"/> */}
                         <span className="field-span"></span>
 </label>
                       </div>
-                      <div className="form-group col-md-4">
+                      <div className="form-group col-md-3">
                           <label>
                         <input type="text"  name="subjectName"  onChange={this.onChangeHandler}  className="form-control fields" placeholder="Subject Name"/>
                         <span className="field-span"></span>
 </label>
                       </div>
-                      
+                      <div className="form-group col-md-3">
+                          <label>
+                        <input type="text"  name="clazzName"  onChange={this.onChangeHandler}  className="form-control fields" placeholder="Class Name"/>
+                        <span className="field-span"></span>
+</label>
+                      </div>
             
                     </div>
 

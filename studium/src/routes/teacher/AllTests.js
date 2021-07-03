@@ -61,7 +61,6 @@ class AllTests extends React.Component {
 componentDidMount(){
 
     teacherService.getMyTests().then((data) => {
-        console.log(data)
     this.setState({
       tableData: data
      });
