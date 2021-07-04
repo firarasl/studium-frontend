@@ -23,7 +23,6 @@ class SubjectProfile extends React.Component {
       componentDidMount(){
         if(this.props.location.query){
             adminService.getSubjectById(this.props.location.query).then((data) => {
-console.log(data)
 
 if(data.archieved==false){
   status="Not Archieved";

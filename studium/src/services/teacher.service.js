@@ -50,11 +50,9 @@ function deleteTest(id) {
 
 function updateTest(id, name, date) {
 let newDate="";
-console.log(date)
   if(date!==""){
     newDate=date.replace("T", " ");
   }
-  console.log(newDate)
 
   return fetch('http://localhost:8080/api/teacher/update-test?name='+name +'&id='+id +'&date='+newDate, {
     method: "PUT",
@@ -108,7 +106,6 @@ function gradeStudent(grade, username, id) {
 
     const isJson = response.headers.get('content-type')?.includes('application/json');
     const data = isJson && await response.json();
-    console.log(response)
 
     if (!response.ok) {
         errorPush(data.message)
@@ -146,7 +143,6 @@ function getTestById(id) {
   })
   .then((response) => { 
       return response.json().then((data) => {
-        console.log(data)
           return data;
       }).catch((err) => {
           console.log(err);
@@ -159,7 +155,6 @@ function getTestById(id) {
 function addTest(name, date, subjectName, clazzName) {
   let testDate="";
   testDate=date.replace("T", " ");
-  console.log(testDate);
 
   return fetch('http://localhost:8080/api/teacher/add-test', {
     method: "POST",
@@ -271,10 +266,8 @@ function upload(file) {
   // dataUpload.append(file, 'file')
     dataUpload.append('file', file)
 
-  console.log(dataUpload.get('file'))
 
   for (var key of dataUpload.entries()) {
-    console.log(key[0] + ', ' + key[1]);
 }
 
   return fetch('http://localhost:8080/api/teacher/upload-csv-file', {
@@ -292,7 +285,6 @@ function upload(file) {
     const data = isJson && await response.json();
 
 
-    console.log(response)
     if (!response.ok) {
         errorPush(data.message)
     }

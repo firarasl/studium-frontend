@@ -11,7 +11,6 @@ function dateBeautifier(uglyDate){
 
 
   beautifulDate = date.getDate()+'/' + (date.getMonth()+1) + '/' + date.getFullYear() +' '+ date.getHours()+':'+ date.getMinutes();
-  console.log(beautifulDate);
 
   return beautifulDate;
 

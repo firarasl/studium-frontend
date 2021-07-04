@@ -36,8 +36,6 @@ class Inbox extends React.Component {
  
     if(this.state.tableData.length>0){
  this.state.tableData.map(object => {
-   console.log("LOOK AT ME")
-   console.log(object)
 
  if(object.read){
    status="read";

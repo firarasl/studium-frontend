@@ -42,10 +42,8 @@ class ClassProfile extends React.Component {
               for(var i=0; i<this.state.subjectList.length; i++){
 
                 if(i<this.state.subjectList.length-1){
-                  console.log(this.state.subjectList[i].name)
                 subjects +=this.state.subjectList[i].name+ ", ";}
                 else{
-                  console.log(this.state.subjectList[i].name)
                   subjects +=this.state.subjectList[i].name+ ". ";
                 }
               }

@@ -67,7 +67,6 @@ class TestProfile extends React.Component {
       componentDidMount(){
         if(this.props.location.query){
             teacherService.getTestById(this.props.location.query).then((data) => {
-                console.log(data)
               this.setState({
                 myData: data,
                 studentData:data.students

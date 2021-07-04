@@ -38,7 +38,6 @@ class SubjectsTestsGrade extends React.Component {
     if(this.state.myData.length>0){
 
  this.state.myData.map(object => {
-   console.log(object)
 
  if(object.graded==false){
 
@@ -69,7 +68,6 @@ class SubjectsTestsGrade extends React.Component {
 
     if(this.props.location.query){
         studentService.getTestsBySubject(this.props.location.query).then((data) => {
-          console.log(data)
           this.setState({
             myData: data
           }); 

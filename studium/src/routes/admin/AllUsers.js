@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from "../../components/Table";
-import {userService} from '../../services/index';
+import {adminService} from '../../services/index';
 import {
   Link
 } from "react-router-dom";
@@ -65,7 +65,7 @@ class AllUsers extends React.Component {
 
 componentDidMount(){
 
-  userService.getAllUsers().then((data) => {
+  adminService.getAllUsers().then((data) => {
     this.setState({
       tableData: data
      });

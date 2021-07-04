@@ -17,12 +17,9 @@ class MessageProfile extends React.Component {
 
 
       componentDidMount(){
-          console.log("ENTERED")
         if(this.props.location.query){
-            console.log(this.props.location.query)
 
           userService.openMessage(this.props.location.query).then((data) => {
-            console.log(data)
 
             this.setState({
               text: data.text,

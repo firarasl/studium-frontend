@@ -18,7 +18,6 @@ function login(username, password) {
         .then(async response => {
             const isJson = response.headers.get('content-type')?.includes('application/json');
             const data = isJson && await response.json();
-
             if (!response.ok) {
                 errorPush(data.message)
             }
@@ -27,12 +26,12 @@ function login(username, password) {
                 sessionStorage.setItem('role', data.roles);
                 history.push("/home");
             }
-
         })
         .catch(error => {
             history.push("/login");
             console.error('There was an error!', error);
         });
-
 }
+
+
 

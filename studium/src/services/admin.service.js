@@ -15,6 +15,7 @@ export const adminService = {
     getAllSubjects,
     addSubject,
     addUser,
+    getAllUsers,
 
 
     getSubjectById,
@@ -22,6 +23,28 @@ export const adminService = {
     archievateSubject,
     updateSubject,
 };
+
+
+function getAllUsers() {
+
+  return fetch('http://localhost:8080/api/admin/all-users', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: sessionStorage.getItem("token")
+    }
+  })
+  .then((response) => { 
+      return response.json().then((data) => {
+          return data;
+      }).catch((err) => {
+          console.log(err);
+          // history.push("/login");
+      }) 
+  });
+
+}
 
 
 function updateUser(newUsername, newFirstname, newLastname, newPassword, userId){
@@ -479,7 +502,6 @@ function getAllSubjects() {
     }
   }).then((response) => { 
     return response.json().then((data) => {
-      console.log(data)
         return data;
     }).catch((err) => {
         console.log(err);

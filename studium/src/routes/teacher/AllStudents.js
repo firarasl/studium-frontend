@@ -59,8 +59,6 @@ class AllStudents extends React.Component {
  }
 
 componentDidMount(){
-  console.log("HELLO")
-
     teacherService.getAllMyStudents().then((data) => {
     this.setState({
       tableData: data
